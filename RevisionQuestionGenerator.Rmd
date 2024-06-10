@@ -1,0 +1,1369 @@
+---
+header-includes:
+   - \usepackage[default]{sourcesanspro}
+   - \usepackage[T1]{fontenc}
+   - \pagenumbering{gobble}
+mainfont: SourceSansPro
+output: pdf_document
+fontsize: 12pt
+geometry: margin=1cm
+classoption: landscape, a4paper
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# $\textbf{\underline{AAT Level 2 Revision}}$
+
+```{r Ver1, include = FALSE}
+
+# Generate
+
+BUSs <- c("InnovateX", "TechSphere", "FutureWave", "QuantumLeap", "NexGen Solutions", "TasteBud Haven", "Epicurean Delight", "SavorStreet", "Gourmet Grove", "Bistro Bliss", "Vitality Vibes", "Zenith Health", "PureWell", "Serenity Sanctuary", "ThriveWellness", "ChicNest" ,"TrendFusion", "ElegantEssence", "Urban Vogue", "StyleSavvy", "ShopEase", "MarketMingle", "UrbanBazaar", "RetailHaven", "EcoMercantile", "Visionary Creations", "CreativePulse", "MediaMosaic", "InspireStudio", "Artistry Avenue", "PrimeNest Realty", "Skyline Estates", "Horizon Homes", "UrbanNest", "LuxuryLiving Realty", "WealthWise", "PrimeInvest", "FortuneFlow", "SecureFuture", "LegacyCapital", "WanderLuxe", "VoyageVista", "TranquilTrails", "AdventureAwaits", "GlobalGetaways", "BrightMinds Academy", "KnowledgeQuest", "LearnSphere", "FuturePath", "EduElevate")
+
+NoOfSL <- 2
+NoOfPL <- 2
+NoOfComp <- NoOfSL + NoOfPL
+
+INVs <- c(sample(10:999,4))
+
+# Making the string of businesses to use
+SBUs <- sample(1:length(BUSs), NoOfComp)
+Busins <- c(BUSs[SBUs])
+
+NOMsP <- paste0("PL",sample(10:99,NoOfPL))
+NOMsS <- paste0("SL",sample(10:99,NoOfSL))
+
+AMs <- c(sample(111:999,4))
+AMs[1] <- sample(111:333, 1) # credit payables
+AMs[2] <- sample(111:333, 1) # credit payables
+AMs[3] <- sample(333:999, 1) # credit receievables
+AMs[4] <- sample(777:999, 1) # credit receievables
+
+
+CHQs <- c(sample(111:999, 5))
+
+MONs <- c(sample(111:999,4))
+MONs[1] = sample(400:999, 1) # cash sales
+MONs[2] = sample(400:999, 1) # rent received
+MONs[3] = sample(111:333, 1) # vehicle repairs
+MONs[4] = sample(111:333, 1) # purchases
+
+RECs <- c(sample(11111:99999,2))
+
+CNs <- c(sample(11:99, 2))
+
+```
+
+$\text{\underline{Post the following transactions into one of the given Day Books and then finally post the Totals into the T-accounts at the end:}}$
+
+1. You receive an invoice (no `r INVs[1]`) from a Creditor called "`r Busins[1]`" (`r NOMsP[1]`) for £`r AMs[1]` plus VAT
+2. You receive an invoice (no `r INVs[2]`) from a Creditor called "`r Busins[2]`" (`r NOMsP[2]`) for £`r AMs[2]` plus VAT (5% Prompt Payment Discount is offered)
+3. You sent an invoice (no `r INVs[3]`) to a Debtor called "`r Busins[3]`" (`r NOMsS[1]`) for £`r AMs[3]` **inclusive of VAT**
+4. You sent an invoice (no `r INVs[4]`) to a Debtor called "`r Busins[4]`" (`r NOMsS[2]`) for £`r AMs[4]` plus VAT (we allow them 5% Prompt Payment Discount)
+5. We pay `r Busins[1]` £`r AMs[1]*1.2` by Cheque (`r CHQs[1]`)
+6. We pay `r Busins[2]` in full by Cheque (`r CHQs[2]`) minus the prompt payment discount offered
+7. We receive a Cheque (`r CHQs[3]`)  from `r Busins[3]` for £`r AMs[3]`
+8. We receive a Cheque (`r CHQs[4]`) from `r Busins[4]` **to settle their invoice** at the lower rate as their $\text{\underline{prompt payment discount was taken in time}}$
+9. We receive £`r MONs[1]` (inclusive of VAT) from cash-sales to the public, all received in CASH.
+10. We receive £`r MONs[2]` by cheque (`r CHQs[5]`) for rent (no VAT)
+11. We pay £`r MONs[3]` plus VAT for vehicle repairs with CASH (Receipt no `r RECs[1]`)
+12.	We make last minute Purchases of goods for resale, for £`r MONs[4]` plus VAT paid by debit card. (Receipt no `r RECs[2]`).
+13. We send out the Prompt Payment Credit Note to `r Busins[4]` (C.Note `r CNs[1]`)
+14. We receive the Prompt Payment Credit Note from `r Busins[2]` (C Note `r CNs[2]`)
+
+&nbsp;
+
+$\textit{\underline{Important note before you begin}}$
+
+*Please use the number of the question instead of a date when completing Day Books*
+
+*When posting from Daybooks into T-Accounts use abbreviated details in the Accounts such as PDB (for Purchase Day Book)*
+
+*You may find it easier to pull pages apart for these types of tasks (especially the back two)*
+
+\pagebreak
+
+```{r Setup flextable, include=FALSE}
+library(flextable)
+set_flextable_defaults(fonts_ignore=TRUE)
+
+big_border = fp_border_default(color="black", width = 0.3)
+brdr <- fp_border_default(color = "black", width = 1.5)
+white <- fp_border_default(color = "white", width = 0.3)
+
+gdtools::register_gfont()
+```
+
+```{r PDB Table Empty, include=FALSE}
+
+PDBedf <- data.frame(Date = c("  ", "  ", "  ", "DR / CR:"),
+                     Supplier = c("  ", "  ", "TOTALS", "  "), 
+                     Invoice.no. = c("  ", "  ", "-----","-----"), 
+                     Folio = c("  ", "  ","-----", "-----"), 
+                     Gross.Total = c("  ","  ","  ", "  "),
+                     VAT = c("  ","  ","  ", "  "),
+                     Net.Amount = c("  ","  ","  ", "  "))
+
+PDBe <- flextable(data = head(PDBedf))
+
+PDBe <- hrule(PDBe, rule = "atleast", part = "body")
+PDBe <- hrule(PDBe, rule = "atleast", part = "header")
+PDBe <- set_header_labels(PDBe, Invoice.no. = "Invoice  No.", Gross.Total = "Gross  Total", Net.Amount = "Net  Amount")
+PDBe <- line_spacing(PDBe, i = 1, space = 1.6, part = "header")
+PDBe <- align(PDBe, align = "center", part = "header")
+PDBe <- border_remove(x = PDBe)
+PDBe <- border_inner_h(PDBe, part="all", border = big_border )
+PDBe <- border_inner_v(PDBe, part="all", border = big_border )
+PDBe <- border_outer(PDBe, part="all", border = big_border )
+PDBe <- bold(PDBe, i = 3, j = 2, bold = TRUE, part = "body")
+PDBe <- add_header_lines(PDBe, values = "Purchases Day Book")
+PDBe <- hline(PDBe, i = 2:3,border = brdr)
+PDBe <- bold(PDBe, bold = TRUE, part = "header")
+PDBe <- align(PDBe, align = "center")
+PDBe <- align(PDBe, align = "center", part = "header")
+PDBe <- height_all(PDBe, height = 1.3, unit  = "cm", part = "all")
+PDBe <- height(PDBe, i = 1, height = 1.5, unit  = "cm", part = "header")
+PDBe <- width(PDBe, j = 2, width = 3, unit  = "cm")
+PDBe <- line_spacing(PDBe, i = 1:4, space = 1.6, part = "body")
+save_as_image(PDBe, "PDBe.png")
+
+```
+
+
+```{r SDB Table Empty, include=FALSE}
+
+SDBedf <- data.frame(Date = c("  ", "  ", "  ", "DR / CR:"), 
+                     Customer = c("  ", "  ", "TOTALS", "  "), 
+                     Invoice.no. = c("  ", "  ", "-----","-----"), 
+                     Folio = c("  ", "  ","-----", "-----"), 
+                     Gross.Total = c("  ","  ","  ", "  "),
+                     VAT = c("  ","  ","  ", "  "),
+                     Net.Amount = c("  ","  ","  ", "  "))
+
+SDBe <- flextable(data = head(SDBedf))
+
+SDBe <- hrule(SDBe, rule = "atleast", part = "body")
+SDBe <- hrule(SDBe, rule = "atleast", part = "header")
+SDBe <- set_header_labels(SDBe, Invoice.no. = "Invoice No.", Gross.Total = "Gross Total", Net.Amount = "Net Amount")
+SDBe <- line_spacing(SDBe, i = 1, space = 1.6, part = "header")
+SDBe <- border_remove(x = SDBe)
+SDBe <- border_inner_h(SDBe, part="all", border = big_border )
+SDBe <- border_inner_v(SDBe, part="all", border = big_border )
+SDBe <- border_outer(SDBe, part="all", border = big_border )
+SDBe <- bold(SDBe, i = 3, j = 2, bold = TRUE, part = "body")
+SDBe <- add_header_lines(SDBe, values = "Sales Day Book")
+SDBe <- hline(SDBe, i = 2:3,border = brdr)
+SDBe <- bold(SDBe, bold = TRUE, part = "header")
+SDBe <- align(SDBe, align = "center")
+SDBe <- align(SDBe, align = "center", part = "header")
+SDBe <- height_all(SDBe, height = 1.3, unit  = "cm", part = "all")
+SDBe <- height(SDBe, i = 1, height = 1.5, unit  = "cm", part = "header")
+SDBe <- width(SDBe, j = 2, width = 3, unit  = "cm")
+SDBe <- line_spacing(SDBe, i = 1:4, space = 1.6, part = "body")
+save_as_image(SDBe, "SDBe.png")
+
+
+```
+
+
+
+
+
+
+
+```{r insert tables, out.width = "400px", echo=FALSE}
+knitr::include_graphics(c("PDBe.png", "SDBe.png"))
+```
+
+&nbsp;
+
+
+```{r DRDB Table Empty, include=FALSE}
+
+DRDBedf <- data.frame(Date = c("  ", "  ", "  ", "DR / CR:"), 
+                     Supplier = c("  ", "  ", "TOTALS", "  "), 
+                     Invoice.no. = c("  ", "  ", "-----","-----"), 
+                     Folio = c("  ", "  ","-----", "-----"), 
+                     Gross.Total = c("  ","  ","  ", "  "),
+                     VAT = c("  ","  ","  ", "  "),
+                     Net.Amount = c("  ","  ","  ", "  "))
+
+DRDBe <- flextable(data = head(DRDBedf))
+
+DRDBe <- hrule(DRDBe, rule = "atleast", part = "body")
+DRDBe <- hrule(DRDBe, rule = "atleast", part = "header")
+DRDBe <- set_header_labels(DRDBe, Invoice.no. = "Invoice No.", Gross.Total = "Gross Total", Net.Amount = "Net Amount")
+DRDBe <- line_spacing(DRDBe, i = 1, space = 1.6, part = "header")
+DRDBe <- border_remove(x = DRDBe)
+DRDBe <- border_inner_h(DRDBe, part="all", border = big_border )
+DRDBe <- border_inner_v(DRDBe, part="all", border = big_border )
+DRDBe <- border_outer(DRDBe, part="all", border = big_border )
+DRDBe <- bold(DRDBe, i = 3, j = 2, bold = TRUE, part = "body")
+DRDBe <- add_header_lines(DRDBe, values = "Discounts Received Day Book")
+DRDBe <- hline(DRDBe, i = 2:3,border = brdr)
+DRDBe <- bold(DRDBe, bold = TRUE, part = "header")
+DRDBe <- align(DRDBe, align = "center")
+DRDBe <- align(DRDBe, align = "center", part = "header")
+DRDBe <- height_all(DRDBe, height = 1.3, unit  = "cm", part = "all")
+DRDBe <- height(DRDBe, i = 1, height = 1.5, unit  = "cm", part = "header")
+DRDBe <- width(DRDBe, j = 2, width = 3, unit  = "cm")
+DRDBe <- line_spacing(DRDBe, i = 1:4, space = 1.6, part = "body")
+save_as_image(DRDBe, "DRDBe.png")
+
+```
+
+
+```{r DADB Table Empty, include=FALSE}
+
+DADBedf <- data.frame(Date = c("  ", "  ", "  ", "DR / CR:"), 
+                     Customer = c("  ", "  ", "TOTALS", "  "), 
+                     Invoice.no. = c("  ", "  ", "-----","-----"), 
+                     Folio = c("  ", "  ","-----", "-----"), 
+                     Gross.Total = c("  ","  ","  ", "  "),
+                     VAT = c("  ","  ","  ", "  "),
+                     Net.Amount = c("  ","  ","  ", "  "))
+
+DADBe <- flextable(data = head(DADBedf))
+
+DADBe <- hrule(DADBe, rule = "atleast", part = "body")
+DADBe <- hrule(DADBe, rule = "atleast", part = "header")
+DADBe <- set_header_labels(DADBe, Invoice.no. = "Invoice No.", Gross.Total = "Gross Total", Net.Amount = "Net Amount")
+DADBe <- line_spacing(DADBe, i = 1, space = 1.6, part = "header")
+DADBe <- border_remove(x = DADBe)
+DADBe <- border_inner_h(DADBe, part="all", border = big_border )
+DADBe <- border_inner_v(DADBe, part="all", border = big_border )
+DADBe <- border_outer(DADBe, part="all", border = big_border )
+DADBe <- bold(DADBe, i = 3, j = 2, bold = TRUE, part = "body")
+DADBe <- add_header_lines(DADBe, values = "Discounts Allowed Day Book")
+DADBe <- hline(DADBe, i = 2:3,border = brdr)
+DADBe <- bold(DADBe, bold = TRUE, part = "header")
+DADBe <- align(DADBe, align = "center")
+DADBe <- align(DADBe, align = "center", part = "header")
+DADBe <- height_all(DADBe, height = 1.3, unit  = "cm", part = "all")
+DADBe <- height(DADBe, i = 1, height = 1.5, unit  = "cm", part = "header")
+DADBe <- width(DADBe, j = 2, width = 3, unit  = "cm")
+DADBe <- line_spacing(DADBe, i = 1:4, space = 1.6, part = "body")
+save_as_image(DADBe, "DADBe.png")
+
+```
+
+
+```{r insert tables 2, out.width = "400px", echo=FALSE}
+knitr::include_graphics(c("DRDBe.png", "DADBe.png"))
+```
+
+
+
+```{r CBR Table Empty, include=FALSE}
+
+CBRedf <- data.frame(Date = c("  ", "  ", "  ", "  ", "  ", "DR / CR:"), 
+                     Details = c("  ", "  ", "  ", "  ", "TOTALS", "-----"), 
+                     Ref = c("  ", "  ", "  ", "  ", "  ", "-----"), 
+                     Total.Cash = c("  ","  ","  ", "  ", "  ", "  "),
+                     Total.Bank = c("  ", "  ","  ", "  ", "  ", "  "),
+                     Receivables.RLCA = c("  ", "  ", "  ", "  ", "  ", "  "),
+                     VAT = c("  ","  ","  ", "  ","  ", "  "),
+                     Sales = c("  ", "  ", "  ", "  ", "  ", "  "),
+                     Rent.Received = c("  ","  ","  ", "  ","  ", "  "))
+
+CBRe <- flextable(data = CBRedf)
+
+CBRe <- hrule(CBRe, rule = "atleast", part = "body")
+CBRe <- hrule(CBRe, rule = "atleast", part = "header")
+CBRe <- set_header_labels(CBRe, Total.Cash = "Total Cash", Total.Bank = "Total Bank", Receivables.RLCA = "Receivables (RLCA)", Rent.Received = "Rent Receieved")
+CBRe <- line_spacing(CBRe, i = 1, space = 1.6, part = "header")
+CBRe <- border_remove(x = CBRe)
+CBRe <- border_inner_h(CBRe, part="all", border = big_border )
+CBRe <- border_inner_v(CBRe, part="all", border = big_border )
+CBRe <- border_outer(CBRe, part="all", border = big_border )
+CBRe <- add_header_lines(CBRe, values = "Cash Book - Receipts")
+CBRe <- hline(CBRe, i = 4:5,border = brdr)
+CBRe <- bold(CBRe, bold = TRUE, part = "header")
+CBRe <- bold(CBRe, i = 6, j = 1, bold = TRUE, part = "body")
+CBRe <- bold(CBRe, i = 5, j = 2, bold = TRUE, part = "body")
+CBRe <- align(CBRe, align = "center")
+CBRe <- align(CBRe, align = "center", part = "header")
+CBRe <- height_all(CBRe, height = 1, unit  = "cm", part = "all")
+CBRe <- height(CBRe, i = 1, height = 1.2, unit  = "cm", part = "header")
+CBRe <- width(CBRe, j = 1, width = 2, unit  = "cm")
+CBRe <- width(CBRe, j = 2, width = 3.5, unit  = "cm")
+CBRe <- width(CBRe, j = 3:7, width = 2.5, unit  = "cm")
+CBRe <- bg(CBRe, j = 4:5, bg = "#aaadab", part = "header")
+CBRe <- fontsize(CBRe, size = 12, part = "header")
+CBRe <- font(CBRe, fontname = "Arial")
+
+CBRe
+save_as_image(CBRe, "CBRe.png")
+
+```
+
+```{r insert tables 3, echo=FALSE, fig.align = 'center'}
+knitr::include_graphics(c("CBRe.png"))
+```
+
+
+
+```{r CBP Table Empty, include=FALSE}
+
+CBPedf <- data.frame(Date = c("  ", "  ", "  ", "  ", "  ", "DR / CR:"), 
+                     Details = c("  ", "  ", "  ", "  ", "TOTALS", "-----"), 
+                     Ref = c("  ", "  ", "  ", "  ", "  ", "-----"),
+                     Cheque.no. = c("  ", "  ", "  ", "  ", "  ", "-----"),
+                     Cash = c("  ","  ","  ", "  ", "  ", "  "),
+                     Bank = c("  ", "  ","  ", "  ", "  ", "  "),
+                     Payables.PLCA = c("  ", "  ", "  ", "  ", "  ", "  "),
+                     VAT = c("  ","  ","  ", "  ","  ", "  "),
+                     Motor.Exp = c("  ", "  ", "  ", "  ", "  ", "  "),
+                     Purchases = c("  ","  ","  ", "  ","  ", "  "))
+
+CBPe <- flextable(data = CBPedf)
+
+CBPe <- hrule(CBPe, rule = "atleast", part = "body")
+CBPe <- hrule(CBPe, rule = "atleast", part = "header")
+CBPe <- set_header_labels(CBPe, Total.Cash = "Total Cash", Cheque.no. = "Cheque no.", Payables.PLCA = "Payables (PLCA)", Motor.Exp = "Motor Expenses")
+CBPe <- line_spacing(CBPe, i = 1, space = 1.6, part = "header")
+CBPe <- border_remove(x = CBPe)
+CBPe <- border_inner_h(CBPe, part="all", border = big_border )
+CBPe <- border_inner_v(CBPe, part="all", border = big_border )
+CBPe <- border_outer(CBPe, part="all", border = big_border )
+CBPe <- add_header_lines(CBPe, values = "Cash Book - Payments")
+CBPe <- hline(CBPe, i = 4:5,border = brdr)
+CBPe <- bold(CBPe, bold = TRUE, part = "header")
+CBPe <- bold(CBPe, i = 6, j = 1, bold = TRUE, part = "body")
+CBPe <- bold(CBPe, i = 5, j = 2, bold = TRUE, part = "body")
+CBPe <- align(CBPe, align = "center")
+CBPe <- align(CBPe, align = "center", part = "header")
+CBPe <- height_all(CBPe, height = 1, unit  = "cm", part = "all")
+CBPe <- height(CBPe, i = 1, height = 1.2, unit  = "cm", part = "header")
+CBPe <- width(CBPe, j = 1, width = 2, unit  = "cm")
+CBPe <- width(CBPe, j = 2, width = 3, unit  = "cm")
+CBPe <- width(CBPe, j = 3:6, width = 2.5, unit  = "cm")
+CBPe <- bg(CBPe, j = 5:6, bg = "#aaadab", part = "header")
+CBPe <- fontsize(CBPe, size = 12, part = "header")
+CBPe <- font(CBPe, fontname = "Arial")
+
+save_as_image(CBPe, "CBPe.png")
+
+```
+
+
+```{r insert tables 4, echo=FALSE, fig.align = 'center'}
+knitr::include_graphics(c("CBPe.png"))
+```
+
+
+```{r t accounts, include=FALSE}
+
+## Blank for space
+
+blankdf <- data.frame(Debit = c("  ","  ","  "))
+blank <- flextable(data = blankdf)
+blank <- hrule(blank, rule = "atleast", part = "body")
+blank <- border_remove(x = blank)
+blank <- delete_part(blank, part = "header")
+blank <- height_all(blank, height = 1, unit  = "cm", part = "body")
+blank <- width(blank, j = 1, width = 1.5, unit  = "cm")
+save_as_image(blank, "blank.png")
+
+
+
+## RCLA T-Account
+
+RLCAtdf <- data.frame(Debit = c("  ","  ","  "),
+                    Credit = c("  ","  ","  "))
+RLCAt <- flextable(data = RLCAtdf)
+RLCAt <- hrule(RLCAt, rule = "atleast", part = "body")
+RLCAt <- border_remove(x = RLCAt)
+RLCAt <- border_inner_v(RLCAt, border = big_border)
+RLCAt <- delete_part(RLCAt, part = "header")
+RLCAt <- add_header_lines(RLCAt, values = "Receivables (RLCA)")
+RLCAt <- hline_top(RLCAt, border = big_border)
+RLCAt <- height_all(RLCAt, height = 1, unit  = "cm", part = "body")
+RLCAt <- width(RLCAt, j = 1:2, width = 3.5, unit  = "cm")
+RLCAt <- align(RLCAt, align = "center", part = "header")
+save_as_image(RLCAt, "RLCAt.png")
+
+
+## PLCA T-Account
+
+PLCAtdf <- data.frame(Debit = c("  ","  ","  "),
+                    Credit = c("  ","  ","  "))
+PLCAt <- flextable(data = PLCAtdf)
+PLCAt <- hrule(PLCAt, rule = "atleast", part = "body")
+PLCAt <- border_remove(x = PLCAt)
+PLCAt <- border_inner_v(PLCAt, border = big_border)
+PLCAt <- delete_part(PLCAt, part = "header")
+PLCAt <- add_header_lines(PLCAt, values = "Payables (PLCA)")
+PLCAt <- hline_top(PLCAt, border = big_border)
+PLCAt <- height_all(PLCAt, height = 1, unit  = "cm", part = "body")
+PLCAt <- width(PLCAt, j = 1:2, width = 3.5, unit  = "cm")
+PLCAt <- align(PLCAt, align = "center", part = "header")
+save_as_image(PLCAt, "PLCAt.png")
+
+
+## Sales T-Account
+
+Saletdf <- data.frame(Debit = c("  ","  ","  "),
+                    Credit = c("  ","  ","  "))
+Salet <- flextable(data = Saletdf)
+Salet <- hrule(Salet, rule = "atleast", part = "body")
+Salet <- border_remove(x = Salet)
+Salet <- border_inner_v(Salet, border = big_border)
+Salet <- delete_part(Salet, part = "header")
+Salet <- add_header_lines(Salet, values = "Sales")
+Salet <- hline_top(Salet, border = big_border)
+Salet <- height_all(Salet, height = 1, unit  = "cm", part = "body")
+Salet <- width(Salet, j = 1:2, width = 3.5, unit  = "cm")
+Salet <- align(Salet, align = "center", part = "header")
+save_as_image(Salet, "Salet.png")
+
+
+## Purchases T-Account
+
+Purtdf <- data.frame(Debit = c("  ","  ","  "),
+                    Credit = c("  ","  ","  "))
+Purt <- flextable(data = Purtdf)
+Purt <- hrule(Purt, rule = "atleast", part = "body")
+Purt <- border_remove(x = Purt)
+Purt <- border_inner_v(Purt, border = big_border)
+Purt <- delete_part(Purt, part = "header")
+Purt <- add_header_lines(Purt, values = "Purchases")
+Purt <- hline_top(Purt, border = big_border)
+Purt <- height_all(Purt, height = 1, unit  = "cm", part = "body")
+Purt <- width(Purt, j = 1:2, width = 3.5, unit  = "cm")
+Purt <- align(Purt, align = "center", part = "header")
+save_as_image(Purt, "Purt.png")
+
+
+
+## VAT T-Account
+
+VATtdf <- data.frame(Debit = c("  ","  ","  "),
+                    Credit = c("  ","  ","  "))
+VATt <- flextable(data = VATtdf)
+VATt <- hrule(VATt, rule = "atleast", part = "body")
+VATt <- border_remove(x = VATt)
+VATt <- border_inner_v(VATt, border = big_border)
+VATt <- delete_part(VATt, part = "header")
+VATt <- add_header_lines(VATt, values = "VAT")
+VATt <- hline_top(VATt, border = big_border)
+VATt <- height_all(VATt, height = 1, unit  = "cm", part = "body")
+VATt <- width(VATt, j = 1:2, width = 3.5, unit  = "cm")
+VATt <- align(VATt, align = "center", part = "header")
+save_as_image(VATt, "VATt.png")
+
+
+## Bank T-Account
+
+Banktdf <- data.frame(Debit = c("  ","  ","  "),
+                    Credit = c("  ","  ","  "))
+Bankt <- flextable(data = Banktdf)
+Bankt <- hrule(Bankt, rule = "atleast", part = "body")
+Bankt <- border_remove(x = Bankt)
+Bankt <- border_inner_v(Bankt, border = big_border)
+Bankt <- delete_part(Bankt, part = "header")
+Bankt <- add_header_lines(Bankt, values = "Bank")
+Bankt <- hline_top(Bankt, border = big_border)
+Bankt <- height_all(Bankt, height = 1, unit  = "cm", part = "body")
+Bankt <- width(Bankt, j = 1:2, width = 3.5, unit  = "cm")
+Bankt <- align(Bankt, align = "center", part = "header")
+save_as_image(Bankt, "Bankt.png")
+
+
+## Cash T-Account
+
+Cashtdf <- data.frame(Debit = c("  ","  ","  "),
+                    Credit = c("  ","  ","  "))
+Casht <- flextable(data = Cashtdf)
+Casht <- hrule(Casht, rule = "atleast", part = "body")
+Casht <- border_remove(x = Casht)
+Casht <- border_inner_v(Casht, border = big_border)
+Casht <- delete_part(Casht, part = "header")
+Casht <- add_header_lines(Casht, values = "Cash")
+Casht <- hline_top(Casht, border = big_border)
+Casht <- height_all(Casht, height = 1, unit  = "cm", part = "body")
+Casht <- width(Casht, j = 1:2, width = 3.5, unit  = "cm")
+Casht <- align(Casht, align = "center", part = "header")
+save_as_image(Casht, "Casht.png")
+
+
+## Rent Received T-Account
+
+Renttdf <- data.frame(Debit = c("  ","  ","  "),
+                    Credit = c("  ","  ","  "))
+Rentt <- flextable(data = Renttdf)
+Rentt <- hrule(Rentt, rule = "atleast", part = "body")
+Rentt <- border_remove(x = Rentt)
+Rentt <- border_inner_v(Rentt, border = big_border)
+Rentt <- delete_part(Rentt, part = "header")
+Rentt <- add_header_lines(Rentt, values = "Rent Received")
+Rentt <- hline_top(Rentt, border = big_border)
+Rentt <- height_all(Rentt, height = 1, unit  = "cm", part = "body")
+Rentt <- width(Rentt, j = 1:2, width = 3.5, unit  = "cm")
+Rentt <- align(Rentt, align = "center", part = "header")
+save_as_image(Rentt, "Rentt.png")
+
+
+## Discount Allowed T-Account
+
+DisAtdf <- data.frame(Debit = c("  ","  ","  "),
+                    Credit = c("  ","  ","  "))
+DisAt <- flextable(data = DisAtdf)
+DisAt <- hrule(DisAt, rule = "atleast", part = "body")
+DisAt <- border_remove(x = DisAt)
+DisAt <- border_inner_v(DisAt, border = big_border)
+DisAt <- delete_part(DisAt, part = "header")
+DisAt <- add_header_lines(DisAt, values = "Disount Allowed")
+DisAt <- hline_top(DisAt, border = big_border)
+DisAt <- height_all(DisAt, height = 1, unit  = "cm", part = "body")
+DisAt <- width(DisAt, j = 1:2, width = 3.5, unit  = "cm")
+DisAt <- align(DisAt, align = "center", part = "header")
+save_as_image(DisAt, "DisAt.png")
+
+
+## Discount Allowed T-Account
+
+DisRtdf <- data.frame(Debit = c("  ","  ","  "),
+                    Credit = c("  ","  ","  "))
+DisRt <- flextable(data = DisRtdf)
+DisRt <- hrule(DisRt, rule = "atleast", part = "body")
+DisRt <- border_remove(x = DisRt)
+DisRt <- border_inner_v(DisRt, border = big_border)
+DisRt <- delete_part(DisRt, part = "header")
+DisRt <- add_header_lines(DisRt, values = "Disount Received")
+DisRt <- hline_top(DisRt, border = big_border)
+DisRt <- height_all(DisRt, height = 1, unit  = "cm", part = "body")
+DisRt <- width(DisRt, j = 1:2, width = 3.5, unit  = "cm")
+DisRt <- align(DisRt, align = "center", part = "header")
+save_as_image(DisRt, "DisRt.png")
+
+
+## Motor Expenses T-Account
+
+Mototdf <- data.frame(Debit = c("  ","  ","  "),
+                    Credit = c("  ","  ","  "))
+Motot <- flextable(data = Mototdf)
+Motot <- hrule(Motot, rule = "atleast", part = "body")
+Motot <- border_remove(x = Motot)
+Motot <- border_inner_v(Motot, border = big_border)
+Motot <- delete_part(Motot, part = "header")
+Motot <- add_header_lines(Motot, values = "Motor Expenses")
+Motot <- hline_top(Motot, border = big_border)
+Motot <- height_all(Motot, height = 1, unit  = "cm", part = "body")
+Motot <- width(Motot, j = 1:2, width = 3.5, unit  = "cm")
+Motot <- align(Motot, align = "center", part = "header")
+save_as_image(Motot, "Motot.png")
+
+
+## Trial Balance
+
+TBdf <- data.frame(Debits = c("  ","  ","  ","  ","  ","  "),
+                   Value = c("  ","  ","  ","  ","  ","  "),
+                   Credits = c("  ","  ","  ","  ","  ","  "),
+                   Value = c("  ","  ","  ","  ","  ","  "))
+TB <- flextable(data = TBdf)
+TB <- hrule(TB, rule = "atleast", part = "body")
+TB <- border_remove(x = TB)
+TB <- border_inner_h(TB, part="all", border = big_border )
+TB <- border_inner_v(TB, part="all", border = big_border )
+TB <- border_outer(TB, part="all", border = big_border )
+TB <- hline(TB, i = 5:6,border = brdr)
+TB <- hline(TB, i = 1:4,border = white)
+TB <- set_header_labels(TB, values = c("Debits", "   ", "Credits", "   "))
+TB <- height_all(TB, height = 0.82, unit  = "cm", part = "body")
+TB <- width(TB, j = 1, width = 2.5, unit  = "cm")
+TB <- width(TB, j = 3, width = 2.5, unit  = "cm")
+TB <- align(TB, align = "center", part = "header")
+save_as_image(TB, "TB.png")
+
+
+```
+
+```{r insert line 1 t-accounts, out.width = "400px", echo=FALSE}
+knitr::include_graphics(c("RLCAt.png", "blank.png", "PLCAt.png", "blank.png", "Salet.png"))
+```
+
+
+```{r insert line 2 t-accounts, out.width = "400px", echo=FALSE}
+knitr::include_graphics(c("Purt.png", "blank.png", "VATt.png", "blank.png", "Bankt.png"))
+```
+
+
+```{r insert line 3 t-accounts, out.width = "400px", echo=FALSE}
+knitr::include_graphics(c("Casht.png", "blank.png", "Rentt.png", "blank.png", "DisAt.png"))
+```
+
+
+```{r insert line 4 t-accounts, out.width = "400px", echo=FALSE}
+knitr::include_graphics(c("DisRt.png", "blank.png", "Motot.png", "blank.png", "TB.png"))
+```
+
+
+\pagebreak
+
+# $\textbf{\underline{EXTENSION TASKS:}}$
+
+***1. Is the Cash Book part of the General Ledger for this business?***
+
+***2. Populate the Subsidiary ledgers on this page and then add them up & reconcile with Control Accounts (SLCA and PLCA).***
+
+
+&nbsp;
+
+
+## $\kern 4em$ Sales Ledger: $\kern 28em$ Purchase Ledger:
+
+&nbsp;
+
+
+```{r subsidiary t-accounts,include=FALSE}
+
+## Blank for space 2
+
+blankdf2 <- data.frame(Debit = c("  ","  ","  "))
+blank2 <- flextable(data = blankdf2)
+blank2 <- hrule(blank2, rule = "atleast", part = "body")
+blank2 <- border_remove(x = blank2)
+blank2 <- delete_part(blank2, part = "header")
+blank2 <- height_all(blank2, height = 1, unit  = "cm", part = "body")
+blank2 <- width(blank2, j = 1, width = 10, unit  = "cm")
+save_as_image(blank2, "blank2.png")
+
+
+## DR1 T-Account
+
+DR1tdf <- data.frame(Debit = c("  ","  ","  "),
+                    Credit = c("  ","  ","  "))
+DR1t <- flextable(data = DR1tdf)
+DR1t <- hrule(DR1t, rule = "atleast", part = "body")
+DR1t <- border_remove(x = DR1t)
+DR1t <- border_inner_v(DR1t, border = big_border)
+DR1t <- delete_part(DR1t, part = "header")
+DR1t <- add_header_lines(DR1t, values = Busins[3])
+DR1t <- hline_top(DR1t, border = big_border)
+DR1t <- height_all(DR1t, height = 1, unit  = "cm", part = "body")
+DR1t <- width(DR1t, j = 1:2, width = 3.5, unit  = "cm")
+DR1t <- align(DR1t, align = "center", part = "header")
+save_as_image(DR1t, "DR1t.png")
+
+
+## CR1 T-Account
+
+CR1tdf <- data.frame(Debit = c("  ","  ","  "),
+                    Credit = c("  ","  ","  "))
+CR1t <- flextable(data = CR1tdf)
+CR1t <- hrule(CR1t, rule = "atleast", part = "body")
+CR1t <- border_remove(x = CR1t)
+CR1t <- border_inner_v(CR1t, border = big_border)
+CR1t <- delete_part(CR1t, part = "header")
+CR1t <- add_header_lines(CR1t, values = Busins[1])
+CR1t <- hline_top(CR1t, border = big_border)
+CR1t <- height_all(CR1t, height = 1, unit  = "cm", part = "body")
+CR1t <- width(CR1t, j = 1:2, width = 3.5, unit  = "cm")
+CR1t <- align(CR1t, align = "center", part = "header")
+save_as_image(CR1t, "CR1t.png")
+
+
+## DR2 T-Account
+
+DR2tdf <- data.frame(Debit = c("  ","  ","  "),
+                    Credit = c("  ","  ","  "))
+DR2t <- flextable(data = DR2tdf)
+DR2t <- hrule(DR2t, rule = "atleast", part = "body")
+DR2t <- border_remove(x = DR2t)
+DR2t <- border_inner_v(DR2t, border = big_border)
+DR2t <- delete_part(DR2t, part = "header")
+DR2t <- add_header_lines(DR2t, values = Busins[4])
+DR2t <- hline_top(DR2t, border = big_border)
+DR2t <- height_all(DR2t, height = 1, unit  = "cm", part = "body")
+DR2t <- width(DR2t, j = 1:2, width = 3.5, unit  = "cm")
+DR2t <- align(DR2t, align = "center", part = "header")
+save_as_image(DR2t, "DR2t.png")
+
+
+## CR2 T-Account
+
+CR2tdf <- data.frame(Debit = c("  ","  ","  "),
+                    Credit = c("  ","  ","  "))
+CR2t <- flextable(data = CR2tdf)
+CR2t <- hrule(CR2t, rule = "atleast", part = "body")
+CR2t <- border_remove(x = CR2t)
+CR2t <- border_inner_v(CR2t, border = big_border)
+CR2t <- delete_part(CR2t, part = "header")
+CR2t <- add_header_lines(CR2t, values = Busins[2])
+CR2t <- hline_top(CR2t, border = big_border)
+CR2t <- height_all(CR2t, height = 1, unit  = "cm", part = "body")
+CR2t <- width(CR2t, j = 1:2, width = 3.5, unit  = "cm")
+CR2t <- align(CR2t, align = "center", part = "header")
+save_as_image(CR2t, "CR2t.png")
+
+
+```
+
+
+```{r insert line subsi 1 t-accounts, out.width = "400px", echo=FALSE}
+knitr::include_graphics(c("DR1t.png", "blank2.png", "CR1t.png"))
+```
+
+&nbsp;
+
+```{r insert line 2 subsi t-accounts, out.width = "400px", echo=FALSE}
+knitr::include_graphics(c("DR2t.png", "blank2.png", "CR2t.png"))
+```
+
+\pagebreak
+
+
+
+# $\textbf{\underline{Solutions:}}$
+
+
+```{r PDB and SDB Table Answers, include=FALSE}
+
+# PDB Answers
+
+PDBdf <- data.frame(Date = c("1.", "2.", "  ", "DR / CR:"),
+                     Supplier = c(Busins[1], Busins[2], "TOTALS", "  "), 
+                     Invoice.no. = c(INVs[1], INVs[2], "-----","-----"), 
+                     Folio = c(NOMsP[1], NOMsP[2], "-----", "-----"), 
+                     Gross.Total = c(AMs[1]*1.2,AMs[2]*1.2,(AMs[1]*1.2)+(AMs[2]*1.2), "CR PLCA"),
+                     VAT = c(AMs[1]*0.2,AMs[2]*0.2,(AMs[1]*0.2)+(AMs[2]*0.2), "DR VAT"),
+                     Net.Amount = c(AMs[1],AMs[2],AMs[1]+AMs[2], "DR Purchases"))
+
+PDB <- flextable(data = head(PDBdf))
+
+PDB <- hrule(PDB, rule = "exact", part = "body")
+PDB <- hrule(PDB, rule = "exact", part = "header")
+PDB <- set_header_labels(PDB, Invoice.no. = "Invoice  No.", Gross.Total = "Gross  Total", Net.Amount = "Net  Amount")
+PDB <- line_spacing(PDB, i = 1, space = 1.6, part = "header")
+PDB <- align(PDB, align = "center", part = "header")
+PDB <- border_remove(x = PDB)
+PDB <- border_inner_h(PDB, part="all", border = big_border )
+PDB <- border_inner_v(PDB, part="all", border = big_border )
+PDB <- border_outer(PDB, part="all", border = big_border )
+PDB <- bold(PDB, i = 3, j = 2, bold = TRUE, part = "body")
+PDB <- add_header_lines(PDB, values = "Purchases Day Book")
+PDB <- hline(PDB, i = 2:3,border = brdr)
+PDB <- bold(PDB, bold = TRUE, part = "header")
+PDB <- align(PDB, align = "center")
+PDB <- align(PDB, align = "center", part = "header")
+PDB <- height_all(PDB, height = 1.3, unit  = "cm", part = "all")
+PDB <- height(PDB, i = 1, height = 1.5, unit  = "cm", part = "header")
+PDB <- width(PDB, j = 2, width = 3, unit  = "cm")
+PDB <- line_spacing(PDB, i = 1:4, space = 1.6, part = "body")
+save_as_image(PDB, "PDB.png")
+
+
+# SBD Answers
+
+SDBdf <- data.frame(Date = c("3.", "4.", "  ", "DR / CR:"), 
+                     Customer = c(Busins[3], Busins[4], "TOTALS", "  "), 
+                     Invoice.no. = c(INVs[3], INVs[4], "-----","-----"), 
+                     Folio = c(NOMsS[1], NOMsS[2],"-----", "-----"), 
+                     Gross.Total = c(AMs[3], AMs[4]*1.2, AMs[3]+(AMs[4]*1.2), "DR RLCA"),
+                     VAT = c(round(AMs[3]/6,2), AMs[4]*0.2, round(AMs[3]/6,2)+(AMs[4]*0.2), "CR VAT"),
+                     Net.Amount = c(round(AMs[3]/1.2,2), AMs[4], round(AMs[3]/1.2,2) + AMs[4], "CR Sales"))
+
+SDB <- flextable(data = head(SDBdf))
+
+SDB <- hrule(SDB, rule = "exact", part = "body")
+SDB <- hrule(SDB, rule = "exact", part = "header")
+SDB <- set_header_labels(SDB, Invoice.no. = "Invoice No.", Gross.Total = "Gross Total", Net.Amount = "Net Amount")
+SDB <- line_spacing(SDB, i = 1, space = 1.6, part = "all")
+SDB <- border_remove(x = SDB)
+SDB <- border_inner_h(SDB, part="all", border = big_border )
+SDB <- border_inner_v(SDB, part="all", border = big_border )
+SDB <- border_outer(SDB, part="all", border = big_border )
+SDB <- bold(SDB, i = 3, j = 2, bold = TRUE, part = "body")
+SDB <- add_header_lines(SDB, values = "Sales Day Book")
+SDB <- hline(SDB, i = 2:3,border = brdr)
+SDB <- bold(SDB, bold = TRUE, part = "header")
+SDB <- align(SDB, align = "center")
+SDB <- align(SDB, align = "center", part = "header")
+SDB <- height_all(SDB, height = 1.3, unit  = "cm", part = "all")
+SDB <- height(SDB, i = 1, height = 1.5, unit  = "cm", part = "header")
+SDB <- width(SDB, j = 2, width = 3, unit  = "cm")
+SDB <- line_spacing(SDB, i = 1:4, space = 1.6, part = "body")
+save_as_image(SDB, "SDB.png")
+
+```
+
+```{r insert line 1 answers, out.width = "400px", echo=FALSE}
+knitr::include_graphics(c("PDB.png","SDB.png"))
+```
+
+
+
+```{r DRDB and DADB answers, include=FALSE}
+
+# DRDB Answers
+
+DRDBdf <- data.frame(Date = c("14.", "  ", "  ", "DR / CR:"), 
+                     Supplier = c(Busins[2], "  ", "TOTALS", "  "), 
+                     Invoice.no. = c(CNs[2], "  ", "-----","-----"), 
+                     Folio = c(NOMsP[2], "  ","-----", "-----"), 
+                     Gross.Total = c((AMs[2]*0.05)*1.2, "  ",(AMs[2]*0.05)*1.2, "DR PLCA"),
+                     VAT = c((AMs[2]*0.05)*0.2,"  ", (AMs[2]*0.05)*0.2, "CR VAT"),
+                     Net.Amount = c(AMs[2]*0.05,"  ", AMs[2]*0.05, "DR Discounts Rec."))
+
+DRDB <- flextable(data = head(DRDBdf))
+
+DRDB <- hrule(DRDB, rule = "atleast", part = "body")
+DRDB <- hrule(DRDB, rule = "atleast", part = "header")
+DRDB <- set_header_labels(DRDB, Invoice.no. = "Invoice No.", Gross.Total = "Gross Total", Net.Amount = "Net Amount")
+DRDB <- line_spacing(DRDB, i = 1, space = 1.6, part = "header")
+DRDB <- border_remove(x = DRDB)
+DRDB <- border_inner_h(DRDB, part="all", border = big_border )
+DRDB <- border_inner_v(DRDB, part="all", border = big_border )
+DRDB <- border_outer(DRDB, part="all", border = big_border )
+DRDB <- bold(DRDB, i = 3, j = 2, bold = TRUE, part = "body")
+DRDB <- add_header_lines(DRDB, values = "Discounts Received Day Book")
+DRDB <- hline(DRDB, i = 2:3,border = brdr)
+DRDB <- bold(DRDB, bold = TRUE, part = "header")
+DRDB <- align(DRDB, align = "center")
+DRDB <- align(DRDB, align = "center", part = "header")
+DRDB <- height_all(DRDB, height = 1.3, unit  = "cm", part = "all")
+DRDB <- height(DRDB, i = 1, height = 1.5, unit  = "cm", part = "header")
+DRDB <- width(DRDB, j = 2, width = 3, unit  = "cm")
+DRDB <- line_spacing(DRDB, i = 1:4, space = 1.6, part = "body")
+save_as_image(DRDB, "DRDB.png")
+
+
+# DADB Answers
+
+DADBdf <- data.frame(Date = c("13.", "  ", "  ", "DR / CR:"), 
+                     Customer = c(Busins[4], "  ", "TOTALS", "  "), 
+                     Invoice.no. = c(CNs[1], "  ", "-----","-----"), 
+                     Folio = c(NOMsS[2], "  ","-----", "-----"), 
+                     Gross.Total = c((AMs[4]*0.05)*1.2,"  ",(AMs[4]*0.05)*1.2, "CR RLCA"),
+                     VAT = c((AMs[4]*0.05)*0.2,"  ",(AMs[4]*0.05)*0.2, "DR VAT"),
+                     Net.Amount = c(AMs[4]*0.05,"  ",AMs[4]*0.05, "DR Discounts All."))
+
+DADB <- flextable(data = head(DADBdf))
+
+DADB <- hrule(DADB, rule = "atleast", part = "body")
+DADB <- hrule(DADB, rule = "atleast", part = "header")
+DADB <- set_header_labels(DADB, Invoice.no. = "Invoice No.", Gross.Total = "Gross Total", Net.Amount = "Net Amount")
+DADB <- line_spacing(DADB, i = 1, space = 1.6, part = "header")
+DADB <- border_remove(x = DADB)
+DADB <- border_inner_h(DADB, part="all", border = big_border )
+DADB <- border_inner_v(DADB, part="all", border = big_border )
+DADB <- border_outer(DADB, part="all", border = big_border )
+DADB <- bold(DADB, i = 3, j = 2, bold = TRUE, part = "body")
+DADB <- add_header_lines(DADB, values = "Discounts Allowed Day Book")
+DADB <- hline(DADB, i = 2:3,border = brdr)
+DADB <- bold(DADB, bold = TRUE, part = "header")
+DADB <- align(DADB, align = "center")
+DADB <- align(DADB, align = "center", part = "header")
+DADB <- height_all(DADB, height = 1.3, unit  = "cm", part = "all")
+DADB <- height(DADB, i = 1, height = 1.5, unit  = "cm", part = "header")
+DADB <- width(DADB, j = 2, width = 3, unit  = "cm")
+DADB <- line_spacing(DADB, i = 1:4, space = 1.6, part = "body")
+save_as_image(DADB, "DADB.png")
+
+```
+
+&nbsp;
+
+```{r insert tables answers 2, out.width = "400px", echo=FALSE}
+knitr::include_graphics(c("DRDB.png", "DADB.png"))
+```
+
+
+
+
+```{r CBR Table Answers, include=FALSE}
+
+CBRdf <- data.frame(Date = c("7.", "8.", "9.", "10.", "  ", "DR / CR:"), 
+                     Details = c(Busins[3], Busins[4], "Cash Sales", "Rent Recieved", "TOTALS", "-----"), 
+                     Ref = c(NOMsS[1], NOMsS[2], "CASH", CHQs[3], "  ", "-----"), 
+                     Total.Cash = c("  ","  ", MONs[1], "  ", MONs[1], "DR"),
+                     Total.Bank = c(AMs[3], (AMs[4]*1.2)*0.95, "  ", MONs[2], AMs[3]+((AMs[4]*1.2)*0.95)+MONs[2], "DR"),
+                     Receivables.RLCA = c(AMs[3], (AMs[4]*1.2)*0.95, "  ", "  ", AMs[3]+((AMs[4]*1.2)*0.95), "CR"),
+                     VAT = c("  ","  ",round(MONs[1]/6,2), "  ",round(MONs[1]/6,2), "CR"),
+                     Sales = c("  ", "  ", round(MONs[1]/1.2,2), "  ", round(MONs[1]/1.2,2), "CR"),
+                     Rent.Received = c("  ","  ","  ", MONs[2],MONs[2], "CR"))
+
+CBR <- flextable(data = CBRdf)
+
+CBR <- hrule(CBR, rule = "atleast", part = "body")
+CBR <- hrule(CBR, rule = "atleast", part = "header")
+CBR <- set_header_labels(CBR, Total.Cash = "Total Cash", Total.Bank = "Total Bank", Receivables.RLCA = "Receivables (RLCA)", Rent.Received = "Rent Receieved")
+CBR <- line_spacing(CBR, i = 1, space = 1.6, part = "header")
+CBR <- border_remove(x = CBR)
+CBR <- border_inner_h(CBR, part="all", border = big_border )
+CBR <- border_inner_v(CBR, part="all", border = big_border )
+CBR <- border_outer(CBR, part="all", border = big_border )
+CBR <- add_header_lines(CBR, values = "Cash Book - Receipts")
+CBR <- hline(CBR, i = 4:5,border = brdr)
+CBR <- bold(CBR, bold = TRUE, part = "header")
+CBR <- bold(CBR, i = 6, j = 1, bold = TRUE, part = "body")
+CBR <- bold(CBR, i = 5, j = 2, bold = TRUE, part = "body")
+CBR <- align(CBR, align = "center")
+CBR <- align(CBR, align = "center", part = "header")
+CBR <- height_all(CBR, height = 1, unit  = "cm", part = "all")
+CBR <- height(CBR, i = 1, height = 1.2, unit  = "cm", part = "header")
+CBR <- width(CBR, j = 1, width = 2.5, unit  = "cm")
+CBR <- width(CBR, j = 2, width = 3.5, unit  = "cm")
+CBR <- width(CBR, j = 3:7, width = 2.5, unit  = "cm")
+CBR <- bg(CBR, j = 4:5, bg = "#aaadab", part = "header")
+CBR <- fontsize(CBR, size = 12, part = "header")
+CBR <- font(CBR, fontname = "Arial")
+save_as_image(CBR, "CBR.png")
+
+```
+
+```{r insert answers tables 3, echo=FALSE, fig.align = 'center'}
+knitr::include_graphics(c("CBR.png"))
+```
+
+
+
+```{r CBP Table Answers, include=FALSE}
+
+CBPdf <- data.frame(Date = c("5.", "6.", "11.", "12.", "  ", "DR / CR:"), 
+                     Details = c(Busins[1], Busins[2], "Motor Exp.", "C. Purchase", "TOTALS", "-----"), 
+                     Ref = c(NOMsP[1], NOMsS[2], RECs[1], RECs[2], "  ", "-----"),
+                     Cheque.no. = c(CHQs[1], CHQs[2], "Cash", "D.Card", "  ", "-----"),
+                     Cash = c("  ","  ",MONs[3]*1.2, "  ", MONs[3]*1.2, "CR"),
+                     Bank = c(AMs[1]*1.2, (AMs[2]*1.2)*0.95,"  ", MONs[4]*1.2, (AMs[1]*1.2)+((AMs[2]*1.2)*0.95)+(MONs[4]*1.2), "CR"),
+                     Payables.PLCA = c(AMs[1]*1.2, (AMs[2]*1.2)*0.95, "  ", "  ", (AMs[1]*1.2)+((AMs[2]*1.2)*0.95), "DR"),
+                     VAT = c("  ","  ",MONs[3]*0.2, MONs[4]*0.2,(MONs[3]*0.2)+(MONs[4]*0.2), "DR"),
+                     Motor.Exp = c("  ", "  ", MONs[3], "  ", MONs[3], "DR"),
+                     Purchases = c("  ","  ","  ", MONs[4], MONs[4], "DR"))
+
+CBP <- flextable(data = CBPdf)
+
+CBP <- hrule(CBP, rule = "atleast", part = "body")
+CBP <- hrule(CBP, rule = "atleast", part = "header")
+CBP <- set_header_labels(CBP, Total.Cash = "Total Cash", Cheque.no. = "Cheque no.", Payables.PLCA = "Payables (PLCA)", Motor.Exp = "Motor Expenses")
+CBP <- line_spacing(CBP, i = 1, space = 1.6, part = "header")
+CBP <- border_remove(x = CBP)
+CBP <- border_inner_h(CBP, part="all", border = big_border )
+CBP <- border_inner_v(CBP, part="all", border = big_border )
+CBP <- border_outer(CBP, part="all", border = big_border )
+CBP <- add_header_lines(CBP, values = "Cash Book - Payments")
+CBP <- hline(CBP, i = 4:5,border = brdr)
+CBP <- bold(CBP, bold = TRUE, part = "header")
+CBP <- bold(CBP, i = 6, j = 1, bold = TRUE, part = "body")
+CBP <- bold(CBP, i = 5, j = 2, bold = TRUE, part = "body")
+CBP <- align(CBP, align = "center")
+CBP <- align(CBP, align = "center", part = "header")
+CBP <- height_all(CBP, height = 1, unit  = "cm", part = "all")
+CBP <- height(CBP, i = 1, height = 1.2, unit  = "cm", part = "header")
+CBP <- width(CBP, j = 1, width = 2.5, unit  = "cm")
+CBP <- width(CBP, j = 2, width = 3, unit  = "cm")
+CBP <- width(CBP, j = 3:6, width = 2.5, unit  = "cm")
+CBP <- bg(CBP, j = 5:6, bg = "#aaadab", part = "header")
+CBP <- fontsize(CBP, size = 12, part = "header")
+CBP <- font(CBP, fontname = "Arial")
+
+save_as_image(CBP, "CBP.png")
+
+```
+
+
+```{r insert tables answers 4, echo=FALSE, fig.align = 'center'}
+knitr::include_graphics(c("CBP.png"))
+```
+
+
+
+```{r t accounts answers, include=FALSE}
+
+## RCLA T-Account
+
+aRLCAtdf <- data.frame(Label = c("SDB", "  ", "  "),
+                       Debit = c(AMs[3]+(AMs[4]*1.2),"  ","  "),
+                       Label = c("DADB", "CBR", "  "),
+                       Credit = c((AMs[4]*0.05)*1.2,AMs[3]+((AMs[4]*1.2)*0.95),"  "))
+aRLCAt <- flextable(data = aRLCAtdf)
+aRLCAt <- hrule(aRLCAt, rule = "atleast", part = "body")
+aRLCAt <- border_remove(x = aRLCAt)
+aRLCAt <- border_inner_v(aRLCAt, border = big_border)
+aRLCAt <- delete_part(aRLCAt, part = "header")
+aRLCAt <- add_header_lines(aRLCAt, values = "Receivables (RLCA)")
+aRLCAt <- hline_top(aRLCAt, border = big_border)
+aRLCAt <- height_all(aRLCAt, height = 0.8, unit  = "cm", part = "body")
+aRLCAt <- width(aRLCAt, j = 1:4, width = 1.75, unit  = "cm")
+aRLCAt <- align(aRLCAt, align = "center", part = "header")
+aRLCAt <- vline(aRLCAt, j = 1, border = white, part = "body")
+aRLCAt <- vline(aRLCAt, j = 3, border = white, part = "body")
+save_as_image(aRLCAt, "aRLCAt.png")
+
+## PLCA T-Account
+
+aPLCAtdf <- data.frame(Label = c("DRDB", "CBP", "  "),
+                       Debit = c((AMs[2]*0.05)*1.2, (AMs[1]*1.2)+((AMs[2]*1.2)*0.95),"  "),
+                       Label = c("PDB", "  ", "  "),
+                       Credit = c((AMs[1]*1.2)+(AMs[2]*1.2), "  ","  "))
+aPLCAt <- flextable(data = aPLCAtdf)
+aPLCAt <- hrule(aPLCAt, rule = "atleast", part = "body")
+aPLCAt <- border_remove(x = aPLCAt)
+aPLCAt <- border_inner_v(aPLCAt, border = big_border)
+aPLCAt <- delete_part(aPLCAt, part = "header")
+aPLCAt <- add_header_lines(aPLCAt, values = "Payables (PLCA)")
+aPLCAt <- hline_top(aPLCAt, border = big_border)
+aPLCAt <- height_all(aPLCAt, height = 0.8, unit  = "cm", part = "body")
+aPLCAt <- width(aPLCAt, j = 1:4, width = 1.75, unit  = "cm")
+aPLCAt <- align(aPLCAt, align = "center", part = "header")
+aPLCAt <- vline(aPLCAt, j = 1, border = white, part = "body")
+aPLCAt <- vline(aPLCAt, j = 3, border = white, part = "body")
+save_as_image(aPLCAt, "aPLCAt.png")
+
+
+## Sales T-Account
+
+aSaletdf <- data.frame(Label = c(" ", "  ", "  "),
+                      Debit = c("  ","  ","  "),
+                      Label = c("SDB", "CBR", "  "),
+                      Credit = c(round(AMs[3]/1.2,2) + AMs[4],round(MONs[1]/1.2,2),"  "))
+aSalet <- flextable(data = aSaletdf)
+aSalet <- hrule(aSalet, rule = "atleast", part = "body")
+aSalet <- border_remove(x = aSalet)
+aSalet <- border_inner_v(aSalet, border = big_border)
+aSalet <- delete_part(aSalet, part = "header")
+aSalet <- add_header_lines(aSalet, values = "Sales")
+aSalet <- hline_top(aSalet, border = big_border)
+aSalet <- height_all(aSalet, height = 0.8, unit  = "cm", part = "body")
+aSalet <- width(aSalet, j = 1:4, width = 1.75, unit  = "cm")
+aSalet <- align(aSalet, align = "center", part = "header")
+aSalet <- vline(aSalet, j = 1, border = white, part = "body")
+aSalet <- vline(aSalet, j = 3, border = white, part = "body")
+save_as_image(aSalet, "aSalet.png")
+
+tSalet <- round(AMs[3]/1.2,2) + AMs[4] + round(MONs[1]/1.2,2)
+
+## Purchases T-Account
+
+aPurtdf <- data.frame(Label = c("PDB", "CBP", "  "),
+                      Debit = c(AMs[1]+AMs[2],MONs[4],"  "),
+                      Label = c(" ", "  ", "  "),
+                     Credit = c("  ","  ","  "))
+aPurt <- flextable(data = aPurtdf)
+aPurt <- hrule(aPurt, rule = "atleast", part = "body")
+aPurt <- border_remove(x = aPurt)
+aPurt <- border_inner_v(aPurt, border = big_border)
+aPurt <- delete_part(aPurt, part = "header")
+aPurt <- add_header_lines(aPurt, values = "Purchases")
+aPurt <- hline_top(aPurt, border = big_border)
+aPurt <- height_all(aPurt, height = 0.8, unit  = "cm", part = "body")
+aPurt <- width(aPurt, j = 1:4, width = 1.75, unit  = "cm")
+aPurt <- align(aPurt, align = "center", part = "header")
+aPurt <- vline(aPurt, j = 1, border = white, part = "body")
+aPurt <- vline(aPurt, j = 3, border = white, part = "body")
+save_as_image(aPurt, "aPurt.png")
+
+tPurt <- AMs[1]+AMs[2]+MONs[4]
+
+## VAT T-Account
+
+aVATtdf <- data.frame(Label = c("PDB", "DADB", "CBP"),
+                     Debit = c((AMs[1]*0.2)+(AMs[2]*0.2),(AMs[4]*0.05)*0.2,(MONs[3]*0.2)+(MONs[4]*0.2)),
+                     Label = c("SDB", "DRDB", "CBR"),
+                     Credit = c(round(AMs[3]/6,2)+(AMs[4]*0.2),(AMs[2]*0.05)*0.2,round(MONs[1]/6,2)))
+aVATt <- flextable(data = aVATtdf)
+aVATt <- hrule(aVATt, rule = "atleast", part = "body")
+aVATt <- border_remove(x = aVATt)
+aVATt <- border_inner_v(aVATt, border = big_border)
+aVATt <- delete_part(aVATt, part = "header")
+aVATt <- add_header_lines(aVATt, values = "VAT")
+aVATt <- hline_top(aVATt, border = big_border)
+aVATt <- height_all(aVATt, height = 0.8, unit  = "cm", part = "body")
+aVATt <- width(aVATt, j = 1:4, width = 1.75, unit  = "cm")
+aVATt <- align(aVATt, align = "center", part = "header")
+aVATt <- vline(aVATt, j = 1, border = white, part = "body")
+aVATt <- vline(aVATt, j = 3, border = white, part = "body")
+save_as_image(aVATt, "aVATt.png")
+
+
+tVATt <- (round(AMs[3]/6,2)+(AMs[4]*0.2)) + ((AMs[2]*0.05)*0.2) + round(MONs[1]/6,2) -
+  ((AMs[1]*0.2)+(AMs[2]*0.2)) - ((AMs[4]*0.05)*0.2) - ((MONs[3]*0.2)+(MONs[4]*0.2))
+
+
+## Bank T-Account
+
+aBanktdf <- data.frame(Label = c("CBR", "  ", "  "),
+                      Debit = c(AMs[3]+((AMs[4]*1.2)*0.95)+MONs[2],"  ","  "),
+                      Label = c("CBP", "  ", "  "),
+                      Credit = c((AMs[1]*1.2)+((AMs[2]*1.2)*0.95)+(MONs[4]*1.2),"  ","  "))
+aBankt <- flextable(data = aBanktdf)
+aBankt <- hrule(aBankt, rule = "atleast", part = "body")
+aBankt <- border_remove(x = aBankt)
+aBankt <- border_inner_v(aBankt, border = big_border)
+aBankt <- delete_part(aBankt, part = "header")
+aBankt <- add_header_lines(aBankt, values = "Bank")
+aBankt <- hline_top(aBankt, border = big_border)
+aBankt <- height_all(aBankt, height = 0.8, unit  = "cm", part = "body")
+aBankt <- width(aBankt, j = 1:4, width = 1.75, unit  = "cm")
+aBankt <- align(aBankt, align = "center", part = "header")
+aBankt <- vline(aBankt, j = 1, border = white, part = "body")
+aBankt <- vline(aBankt, j = 3, border = white, part = "body")
+save_as_image(aBankt, "aBankt.png")
+
+tBankt <- (AMs[3]+((AMs[4]*1.2)*0.95)+MONs[2]) - ((AMs[1]*1.2)+((AMs[2]*1.2)*0.95)+(MONs[4]*1.2))
+
+
+## Cash T-Account
+
+aCashtdf <- data.frame(Label = c("CBR", "  ", "  "),
+                      Debit = c(MONs[1],"  ","  "),
+                      Label = c("CBP", "  ", "  "),
+                      Credit = c(MONs[3]*1.2,"  ","  "))
+aCasht <- flextable(data = aCashtdf)
+aCasht <- hrule(aCasht, rule = "atleast", part = "body")
+aCasht <- border_remove(x = aCasht)
+aCasht <- border_inner_v(aCasht, border = big_border)
+aCasht <- delete_part(aCasht, part = "header")
+aCasht <- add_header_lines(aCasht, values = "Cash")
+aCasht <- hline_top(aCasht, border = big_border)
+aCasht <- height_all(aCasht, height = 0.8, unit  = "cm", part = "body")
+aCasht <- width(aCasht, j = 1:4, width = 1.75, unit  = "cm")
+aCasht <- align(aCasht, align = "center", part = "header")
+aCasht <- vline(aCasht, j = 1, border = white, part = "body")
+aCasht <- vline(aCasht, j = 3, border = white, part = "body")
+save_as_image(aCasht, "aCasht.png")
+
+tCasht <- MONs[1] - (MONs[3]*1.2)
+
+## Rent Received T-Account
+
+aRenttdf <- data.frame(Label = c(" ", "  ", "  "),
+                      Debit = c("  ","  ","  "),
+                      Label = c("CBR", "  ", "  "),
+                      Credit = c(MONs[2],"  ","  "))
+aRentt <- flextable(data = aRenttdf)
+aRentt <- hrule(aRentt, rule = "atleast", part = "body")
+aRentt <- border_remove(x = aRentt)
+aRentt <- border_inner_v(aRentt, border = big_border)
+aRentt <- delete_part(aRentt, part = "header")
+aRentt <- add_header_lines(aRentt, values = "Rent Received")
+aRentt <- hline_top(aRentt, border = big_border)
+aRentt <- height_all(aRentt, height = 0.8, unit  = "cm", part = "body")
+aRentt <- width(aRentt, j = 1:4, width = 1.75, unit  = "cm")
+aRentt <- align(aRentt, align = "center", part = "header")
+aRentt <- vline(aRentt, j = 1, border = white, part = "body")
+aRentt <- vline(aRentt, j = 3, border = white, part = "body")
+save_as_image(aRentt, "aRentt.png")
+
+tRentt <- MONs[2]
+
+## Discount Allowed T-Account
+
+aDisAtdf <- data.frame(Label = c("DADB", "  ", "  "),
+                      Debit = c(AMs[4]*0.05,"  ","  "),
+                      Label = c(" ", "  ", "  "),
+                      Credit = c("  ","  ","  "))
+aDisAt <- flextable(data = aDisAtdf)
+aDisAt <- hrule(aDisAt, rule = "atleast", part = "body")
+aDisAt <- border_remove(x = aDisAt)
+aDisAt <- border_inner_v(aDisAt, border = big_border)
+aDisAt <- delete_part(aDisAt, part = "header")
+aDisAt <- add_header_lines(aDisAt, values = "Discounts Allowed")
+aDisAt <- hline_top(aDisAt, border = big_border)
+aDisAt <- height_all(aDisAt, height = 0.8, unit  = "cm", part = "body")
+aDisAt <- width(aDisAt, j = 1:4, width = 1.75, unit  = "cm")
+aDisAt <- align(aDisAt, align = "center", part = "header")
+aDisAt <- vline(aDisAt, j = 1, border = white, part = "body")
+aDisAt <- vline(aDisAt, j = 3, border = white, part = "body")
+save_as_image(aDisAt, "aDisAt.png")
+
+tDisAt <- AMs[4]*0.05
+
+## Discount Received T-Account
+
+aDisRtdf <- data.frame(Label = c(" ", "  ", "  "),
+                      Debit = c("  ","  ","  "),
+                      Label = c("DRDB", "  ", "  "),
+                      Credit = c(AMs[2]*0.05,"  ","  "))
+aDisRt <- flextable(data = aDisRtdf)
+aDisRt <- hrule(aDisRt, rule = "atleast", part = "body")
+aDisRt <- border_remove(x = aDisRt)
+aDisRt <- border_inner_v(aDisRt, border = big_border)
+aDisRt <- delete_part(aDisRt, part = "header")
+aDisRt <- add_header_lines(aDisRt, values = "Discounts Received")
+aDisRt <- hline_top(aDisRt, border = big_border)
+aDisRt <- height_all(aDisRt, height = 0.8, unit  = "cm", part = "body")
+aDisRt <- width(aDisRt, j = 1:4, width = 1.75, unit  = "cm")
+aDisRt <- align(aDisRt, align = "center", part = "header")
+aDisRt <- vline(aDisRt, j = 1, border = white, part = "body")
+aDisRt <- vline(aDisRt, j = 3, border = white, part = "body")
+save_as_image(aDisRt, "aDisRt.png")
+
+tDisRt <- AMs[2]*0.05
+
+## Motor Expenses T-Account
+
+aMototdf <- data.frame(Label = c("CBP", "  ", "  "),
+                      Debit = c(MONs[3],"  ","  "),
+                      Label = c(" ", "  ", "  "),
+                      Credit = c("  ","  ","  "))
+aMotot <- flextable(data = aMototdf)
+aMotot <- hrule(aMotot, rule = "atleast", part = "body")
+aMotot <- border_remove(x = aMotot)
+aMotot <- border_inner_v(aMotot, border = big_border)
+aMotot <- delete_part(aMotot, part = "header")
+aMotot <- add_header_lines(aMotot, values = "Motor Expenses")
+aMotot <- hline_top(aMotot, border = big_border)
+aMotot <- height_all(aMotot, height = 0.8, unit  = "cm", part = "body")
+aMotot <- width(aMotot, j = 1:4, width = 1.75, unit  = "cm")
+aMotot <- align(aMotot, align = "center", part = "header")
+aMotot <- vline(aMotot, j = 1, border = white, part = "body")
+aMotot <- vline(aMotot, j = 3, border = white, part = "body")
+save_as_image(aMotot, "aMotot.png")
+
+tMotot <- MONs[3]
+
+## Trial Balance
+
+aTBdf <- data.frame(Debits = c("Purchases","Bank","Cash","Discounts Allowed","Motor Expenses","  "),
+                   Value = c(tPurt,tBankt,tCasht,tDisAt,tMotot,tPurt+tBankt+tCasht+tDisAt+tMotot),
+                   Credits = c("Sales","VAT","Rent Receieved","Discounts Receieved","  ","  "),
+                   Value = c(tSalet,tVATt,tRentt,tDisRt,"  ",tSalet+tVATt+tRentt+tDisRt))
+aTB <- flextable(data = aTBdf)
+aTB <- hrule(aTB, rule = "atleast", part = "body")
+aTB <- border_remove(x = aTB)
+aTB <- border_inner_h(aTB, part="all", border = big_border )
+aTB <- border_inner_v(aTB, part="all", border = big_border )
+aTB <- border_outer(aTB, part="all", border = big_border )
+aTB <- hline(aTB, i = 5:6,border = brdr)
+aTB <- hline(aTB, i = 1:4,border = white)
+aTB <- set_header_labels(aTB, values = c("Debits", "   ", "Credits", "   "))
+aTB <- height_all(aTB, height = 0.82, unit  = "cm", part = "body")
+aTB <- width(aTB, j = 1, width = 2.5, unit  = "cm")
+aTB <- width(aTB, j = 3, width = 2.5, unit  = "cm")
+aTB <- align(aTB, align = "center", part = "header")
+aTB <- line_spacing(aTB, i = 1:4, space = 1.6, part = "body")
+save_as_image(aTB, "aTB.png")
+
+```
+
+
+
+```{r insert line 1 t-accounts ans, out.width = "400px", echo=FALSE}
+knitr::include_graphics(c("aRLCAt.png", "blank.png", "aPLCAt.png", "blank.png", "aSalet.png"))
+```
+
+```{r insert line 2 t-accounts ans, out.width = "400px", echo=FALSE}
+knitr::include_graphics(c("aPurt.png", "blank.png", "aVATt.png", "blank.png", "aBankt.png"))
+```
+
+```{r insert line 3 t-accounts ans, out.width = "400px", echo=FALSE}
+knitr::include_graphics(c("aCasht.png", "blank.png", "aRentt.png", "blank.png", "aDisAt.png"))
+```
+
+```{r insert line 4 t-accounts ans, out.width = "400px", echo=FALSE}
+knitr::include_graphics(c("aDisRt.png", "blank.png", "aMotot.png", "blank.png", "aTB.png"))
+```
+
+
+
+
+```{r subsidiary t-accounts answers,include=FALSE}
+
+## DR1 T-Account
+
+aDR1tdf <- data.frame(Label = c("SDB", " ", "Bal b/d"),
+                     Debit = c(AMs[3],"  ",0),
+                     Label = c("CBR", " ", " "),
+                    Credit = c(AMs[3],"  ","  "))
+aDR1t <- flextable(data = aDR1tdf)
+aDR1t <- hrule(aDR1t, rule = "atleast", part = "body")
+aDR1t <- border_remove(x = aDR1t)
+aDR1t <- border_inner_v(aDR1t, border = big_border)
+aDR1t <- delete_part(aDR1t, part = "header")
+aDR1t <- add_header_lines(aDR1t, values = Busins[3])
+aDR1t <- hline_top(aDR1t, border = big_border)
+aDR1t <- height_all(aDR1t, height = 1, unit  = "cm", part = "body")
+aDR1t <- width(aDR1t, j = 1:4, width = 1.75, unit  = "cm")
+aDR1t <- align(aDR1t, align = "center", part = "header")
+aDR1t <- vline(aDR1t, j = 1, border = white, part = "body")
+aDR1t <- vline(aDR1t, j = 3, border = white, part = "body")
+save_as_image(aDR1t, "aDR1t.png")
+
+
+## CR1 T-Account
+
+aCR1tdf <- data.frame(Label = c("CBP", " ", " "),
+                     Debit = c(AMs[1]*1.2,"  ", " "),
+                     Label = c("PDB", " ", "Bal b/d"),
+                    Credit = c(AMs[1]*1.2,"  ",0))
+aCR1t <- flextable(data = aCR1tdf)
+aCR1t <- hrule(aCR1t, rule = "atleast", part = "body")
+aCR1t <- border_remove(x = aCR1t)
+aCR1t <- border_inner_v(aCR1t, border = big_border)
+aCR1t <- delete_part(aCR1t, part = "header")
+aCR1t <- add_header_lines(aCR1t, values = Busins[1])
+aCR1t <- hline_top(aCR1t, border = big_border)
+aCR1t <- height_all(aCR1t, height = 1, unit  = "cm", part = "body")
+aCR1t <- width(aCR1t, j = 1:4, width = 1.75, unit  = "cm")
+aCR1t <- align(aCR1t, align = "center", part = "header")
+aCR1t <- vline(aCR1t, j = 1, border = white, part = "body")
+aCR1t <- vline(aCR1t, j = 3, border = white, part = "body")
+save_as_image(aCR1t, "aCR1t.png")
+
+
+## DR2 T-Account
+
+aDR2tdf <- data.frame(Label = c("SDB", " ", "Bal b/d"),
+                     Debit = c(AMs[4]*1.2,"  ",0),
+                     Label = c("CDR", "DADB", " "),
+                    Credit = c(AMs[4]*1.2*0.95,AMs[4]*1.2*0.05,"  "))
+aDR2t <- flextable(data = aDR2tdf)
+aDR2t <- hrule(aDR2t, rule = "atleast", part = "body")
+aDR2t <- border_remove(x = aDR2t)
+aDR2t <- border_inner_v(aDR2t, border = big_border)
+aDR2t <- delete_part(aDR2t, part = "header")
+aDR2t <- add_header_lines(aDR2t, values = Busins[4])
+aDR2t <- hline_top(aDR2t, border = big_border)
+aDR2t <- height_all(aDR2t, height = 1, unit  = "cm", part = "body")
+aDR2t <- width(aDR2t, j = 1:4, width = 1.75, unit  = "cm")
+aDR2t <- align(aDR2t, align = "center", part = "header")
+aDR2t <- vline(aDR2t, j = 1, border = white, part = "body")
+aDR2t <- vline(aDR2t, j = 3, border = white, part = "body")
+save_as_image(aDR2t, "aDR2t.png")
+
+
+## CR2 T-Account
+
+aCR2tdf <- data.frame(Label = c("CBP", "DRDB", " "),
+                     Debit = c((AMs[2]*1.2)*0.95,(AMs[2]*1.2)*0.05,"  "),
+                     Label = c("PDB", " ", "Bal b/d"),
+                    Credit = c(AMs[2]*1.2,"  ",0))
+aCR2t <- flextable(data = aCR2tdf)
+aCR2t <- hrule(aCR2t, rule = "atleast", part = "body")
+aCR2t <- border_remove(x = aCR2t)
+aCR2t <- border_inner_v(aCR2t, border = big_border)
+aCR2t <- delete_part(aCR2t, part = "header")
+aCR2t <- add_header_lines(aCR2t, values = Busins[2])
+aCR2t <- hline_top(aCR2t, border = big_border)
+aCR2t <- height_all(aCR2t, height = 1, unit  = "cm", part = "body")
+aCR2t <- width(aCR2t, j = 1:4, width = 1.75, unit  = "cm")
+aCR2t <- align(aCR2t, align = "center", part = "header")
+aCR2t <- vline(aCR2t, j = 1, border = white, part = "body")
+aCR2t <- vline(aCR2t, j = 3, border = white, part = "body")
+save_as_image(aCR2t, "aCR2t.png")
+
+
+```
+
+# Extension Solutions:
+
+1. Is the Cash Book part of the General Ledger for this business? **- NO as has Bank & Cash T's**
+2.
+
+&nbsp;
+
+```{r insert line subsi 1 t-accounts answers, out.width = "400px", echo=FALSE}
+knitr::include_graphics(c("aDR1t.png", "blank2.png", "aCR1t.png"))
+```
+
+&nbsp;
+
+```{r insert line 2 subsi t-accounts answers, out.width = "400px", echo=FALSE}
+knitr::include_graphics(c("aDR2t.png", "blank2.png", "aCR2t.png"))
+```
+
+
