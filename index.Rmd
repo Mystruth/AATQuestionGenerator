@@ -1,0 +1,29 @@
+---
+title: "Click below for Bookkeeeping Practice!"
+output: html_document
+---
+
+Click the below links to open the pdf (to then download)
+I recommend opening the links in a new tab!
+
+[Download Question 1](Generated Question 1.pdf)
+
+[Download Question 2](Generated Question 2.pdf)
+
+[Download Question 3](Generated Question 3.pdf)
+
+[Download Question 4](Generated Question 4.pdf)
+
+[Download Question 5](Generated Question 5.pdf)
+
+[Download Question 6](Generated Question 6.pdf)
+
+[Download Question 7](Generated Question 7.pdf)
+
+[Download Question 8](Generated Question 8.pdf)
+
+[Download Question 9](Generated Question 9.pdf)
+
+[Download Question 10](Generated Question 10.pdf)
+
+[Download Question 11](Generated Question 11.pdf)
