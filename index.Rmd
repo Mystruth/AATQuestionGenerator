@@ -3,10 +3,12 @@ title: "Bookkeeping Practice! (Type 1)"
 output: html_document
 ---
 
-[Generate your own](Generator.html)
+Generate your own below:
 
-[Test1](test.html)
+knitr::include_app("https://3o11jx-ruth-nichols.shinyapps.io/project/")
 
+
+For pre-generated questions see below:
 
 Click the below links to open the pdf (to then download)
 I recommend opening the links in a new tab!
@@ -33,4 +35,4 @@ I recommend opening the links in a new tab!
 
 [Question 11](Generated Question 11.pdf)
 
-this is a test please
+this is a test please 2
