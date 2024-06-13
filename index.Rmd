@@ -10,7 +10,17 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Generate a Type 1 Question
+# The PDF Format
+
+Page 1 : Questions
+
+Pages 2 - 5 : Empty Tables
+
+Pages 6 - 9 : Solutions
+
+&nbsp;
+
+# Generate a Question
 
 <iframe src ="https://mystruth.shinyapps.io/project/" height=43px width=225px />
 
@@ -19,7 +29,12 @@ knitr::include_app("https://mystruth.shinyapps.io/project/",
                    height = "42px")
 ```
 
+The file will automatically download when complete.\
 Please be patient when generating! - It can take up to 30 seconds per download!
+
+
+
+&nbsp;
 
 # Pre-Generated Questions
 
@@ -48,4 +63,7 @@ Clicking the below links rewrites the current page so I recommend opening the li
 [Question 11](RevisionQuestion (11).pdf)
 
 [Question 12](RevisionQuestion.pdf)
+
+&nbsp;
+
 
