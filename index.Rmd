@@ -1,12 +1,12 @@
 ---
-title: "Click below for Bookkeeeping Practice!"
+title: "Bookkeeeping Practice! (Type 1)"
 output: html_document
 ---
 
 Click the below links to open the pdf (to then download)
 I recommend opening the links in a new tab!
 
-[Download Question 1](Generated Question 1.pdf)
+[(Opens in new tab) Question 1](Generated Question 1.pdf){:target="_blank"}
 
 [Download Question 2](Generated Question 2.pdf)
 
