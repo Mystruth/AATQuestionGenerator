@@ -1,0 +1,111 @@
+---
+header-includes:
+   - \usepackage[default]{sourcesanspro}
+   - \usepackage[T1]{fontenc}
+   - \pagenumbering{gobble}
+mainfont: SourceSansPro
+output: pdf_document
+fontsize: 12pt
+geometry: margin=1cm
+classoption: landscape, a4paper
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# $\textbf{AAT Level 2 Revision: Day Books and Double Entry Book-keeping}$
+
+```{r GenerateInfo, include = FALSE}
+
+# Business names from ChatGPT
+BUSs <- c("InnovateX", "TechSphere", "FutureWave", "QuantumLeap", "NexGen Solutions", "TasteBud Haven", "Epicurean Delight", "SavorStreet", "Gourmet Grove", "Bistro Bliss", "Vitality Vibes", "Zenith Health", "PureWell", "Serenity Sanctuary", "ThriveWellness", "ChicNest" ,"TrendFusion", "ElegantEssence", "Urban Vogue", "StyleSavvy", "ShopEase", "MarketMingle", "UrbanBazaar", "RetailHaven", "EcoMercantile", "Visionary Creations", "CreativePulse", "MediaMosaic", "InspireStudio", "Artistry Avenue", "PrimeNest Realty", "Skyline Estates", "Horizon Homes", "UrbanNest", "LuxuryLiving Realty", "WealthWise", "PrimeInvest", "FortuneFlow", "SecureFuture", "LegacyCapital", "WanderLuxe", "VoyageVista", "TranquilTrails", "AdventureAwaits", "GlobalGetaways", "BrightMinds Academy", "KnowledgeQuest", "LearnSphere", "FuturePath", "EduElevate")
+
+# Making the Invoice numbers (eg/ 001)
+INVs <- c(sample(1:999,4))
+for (x in 1:length(INVs)) {
+  if (nchar(as.character(INVs[x])) == 2) {
+    INVs[x] <- paste0("0",as.character(INVs[x]))
+    } 
+  if (nchar(as.character(INVs[x])) == 1) {
+    INVs[x] <- paste0("00",as.character(INVs[x]))
+    }
+}
+
+# Randomly picking 4 business names
+SBUs <- sample(1:length(BUSs), 4)
+Busins <- c(BUSs[SBUs])
+
+# Creating the Ledger codes (eg/ PL01 or SL01)
+NOM <- c(sample(1:99, 4))
+for (w in 1:length(NOM)) {
+  if (nchar(as.character(NOM[w])) == 1) {
+    NOM[w] <- paste0("0",as.character(NOM[w]))
+    }
+}
+NOMsP <- paste0("PL",NOM[1:2])
+NOMsS <- paste0("SL",NOM[3:4])
+
+# Creating the credit Amounts to use (eg/ £111)
+AMs <- c()
+AMs[1] <- sample(111:333, 1) # credit payables
+AMs[2] <- sample(111:333, 1) # credit payables
+AMs[3] <- sample(333:999, 1) # credit receievables
+AMs[4] <- sample(777:999, 1) # credit receievables
+
+# Creating the Cheque No.s (eg/ 01)
+CHQs <- c(sample(1:99, 5))
+for (y in 1:length(CHQs)) {
+  if (nchar(as.character(CHQs[y])) == 1) {
+    CHQs[y] <- paste0("0",as.character(CHQs[y]))
+    }
+}
+
+# Creating the cash Amounts to use (eg/ £111)
+MONs <- c()
+MONs[1] = sample(400:999, 1) # cash sales
+MONs[2] = sample(400:999, 1) # rent received
+MONs[3] = sample(111:333, 1) # vehicle repairs
+MONs[4] = sample(111:333, 1) # purchases
+
+# Creating the Receipt No.s (eg/ 11111)
+RECs <- c(sample(11111:99999,2))
+
+# Creating the Credit Note No.s (eg/ 01)
+CNs <- c(sample(1:99, 2))
+for (z in 1:length(CNs)) {
+  if (nchar(as.character(CNs[z])) == 1) {
+    CNs[z] <- paste0("0",as.character(CNs[z]))
+    }
+}
+
+```
+
+$\text{\underline{Post the following transactions into one of the given Day Books and then finally post the Totals into the T-accounts at the end:}}$
+
+1. You receive an invoice (no `r INVs[1]`) from a Supplier called "`r Busins[1]`" (`r NOMsP[1]`) for £`r AMs[1]` plus VAT
+2. You receive an invoice (no `r INVs[2]`) from a Supplier called "`r Busins[2]`" (`r NOMsP[2]`) for £`r AMs[2]` plus VAT (5% Prompt Payment Discount is offered)
+3. You sent an invoice (no `r INVs[3]`) to a Customer called "`r Busins[3]`" (`r NOMsS[1]`) for £`r AMs[3]` **inclusive of VAT**
+4. You sent an invoice (no `r INVs[4]`) to a Customer called "`r Busins[4]`" (`r NOMsS[2]`) for £`r AMs[4]` plus VAT (we allow them 5% Prompt Payment Discount)
+5. We pay `r Busins[1]` £`r AMs[1]*1.2` by Cheque (`r CHQs[1]`)
+6. We pay `r Busins[2]` in full by Cheque (`r CHQs[2]`) minus the prompt payment discount offered
+7. We receive a Cheque (`r CHQs[3]`)  from `r Busins[3]` for £`r AMs[3]`
+8. We receive a Cheque (`r CHQs[4]`) from `r Busins[4]` **to settle their invoice** at the lower rate as their $\text{\underline{prompt payment discount was taken in time}}$
+9. We receive £`r MONs[1]` (**inclusive of VAT**) from cash-sales to the public, all received in CASH.
+10. We receive £`r MONs[2]` by cheque (`r CHQs[5]`) for rent (**no VAT**)
+11. We pay £`r MONs[3]` plus VAT for vehicle repairs with CASH (Receipt no `r RECs[1]`)
+12.	We make last minute Purchases of goods for resale, for £`r MONs[4]` plus VAT paid by debit card. (Receipt no `r RECs[2]`).
+13. We send out the Prompt Payment Credit Note to `r Busins[4]` (C.Note `r CNs[1]`)
+14. We receive the Prompt Payment Credit Note from `r Busins[2]` (C. Note `r CNs[2]`)
+
+&nbsp;
+
+$\textit{\underline{Important note before you begin}}$
+
+*Please use the number of the question instead of a date when completing Day Books*
+
+*When posting from Daybooks into T-Accounts use abbreviated details in the Accounts such as PDB (for Purchase Day Book)*
+
+*You may find it easier to pull pages apart for these types of tasks (especially the back two)*
+
+\pagebreak
