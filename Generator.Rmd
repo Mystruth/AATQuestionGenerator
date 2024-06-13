@@ -13,9 +13,10 @@ sapply(rmdfiles, knit, quiet = T)
 
 ui <- shinyUI(
     fluidPage(
-        withMathJax(includeMarkdown("RMarkdownFile.md"))
+        includeMarkdown("RMarkdownFile.md")
   )
 )
+
 server <- function(input, output) { }
 
 shinyApp(ui, server)

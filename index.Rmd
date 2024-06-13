@@ -5,6 +5,8 @@ output: html_document
 
 [Generate your own](Generator.html)
 
+[Test1](test.html)
+
 
 Click the below links to open the pdf (to then download)
 I recommend opening the links in a new tab!
