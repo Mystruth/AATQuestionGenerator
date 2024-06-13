@@ -3,5 +3,5 @@ output_dir: "docs"
 navbar:
   title: "AAT Question Generator"
   left:
-    - text: "Download Bookkeeping Practice"
+    - text: "Bookkeeping Practice (Type 1)"
       href: index.html
