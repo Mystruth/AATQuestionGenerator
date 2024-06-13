@@ -1,17 +1,29 @@
 ---
 title: "Bookkeeping Practice! (Type 1)"
-output: html_document
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    toc: yes
 ---
 
-Generate your own below:
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
-knitr::include_app("https://3o11jx-ruth-nichols.shinyapps.io/project/")
+# Generate a Type 1 Question
 
+<iframe src ="https://mystruth.shinyapps.io/project/" height=43px width=225px />
 
-For pre-generated questions see below:
+```{r Generation, echo = FALSE}
+knitr::include_app("https://mystruth.shinyapps.io/project/",
+                   height = "42px")
+```
 
-Click the below links to open the pdf (to then download)
-I recommend opening the links in a new tab!
+Please be patient when generating! - It can take up to 30 seconds per download!
+
+# Pre-Generated Questions
+
+Clicking the below links rewrites the current page so I recommend opening the links in a new tab!
 
 [Question 1](Generated Question 1.pdf)
 
@@ -35,4 +47,3 @@ I recommend opening the links in a new tab!
 
 [Question 11](Generated Question 11.pdf)
 
-this is a test please 2
