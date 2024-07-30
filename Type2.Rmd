@@ -1,0 +1,73 @@
+---
+title: "Bookkeeping Practice - Unit 2"
+---
+
+&nbsp;
+
+### Generate a Question - Type 1 (No Payroll)
+
+<iframe src ="https://mystruth.shinyapps.io/Unit2-Type1/" height=43px width=225px />
+
+```{r Unit2-Type1, echo = FALSE}
+knitr::include_app("https://mystruth.shinyapps.io/Unit2-Type1/",
+                   height = "42px")
+```
+
+The file will automatically download when complete.\
+Please be patient when generating! - It can take up to 30 seconds per download
+
+
+
+&nbsp;
+
+### Pre-Generated Type 1 Questions
+
+Clicking the below links rewrites the current page so I recommend opening the links in a new tab
+
+[Question 1](Unit2Type1Pregens/RevisionQuestion-Unit2-Type1 (1).pdf)
+
+[Question 2](Unit2Type1Pregens/RevisionQuestion-Unit2-Type1 (2).pdf)
+
+[Question 3](Unit2Type1Pregens/RevisionQuestion-Unit2-Type1 (3).pdf)
+
+[Question 4](Unit2Type1Pregens/RevisionQuestion-Unit2-Type1 (4).pdf)
+
+[Question 5](Unit2Type1Pregens/RevisionQuestion-Unit2-Type1 (5).pdf)
+
+[Question 6](Unit2Type1Pregens/RevisionQuestion-Unit2-Type1 (6).pdf)
+
+
+&nbsp;
+
+
+### Generate a Question - Type 2 (With Payroll)
+
+<iframe src ="https://mystruth.shinyapps.io/Unit2-Type2/" height=43px width=225px />
+
+```{r Unit2-Type2, echo = FALSE}
+knitr::include_app("https://mystruth.shinyapps.io/Unit2-Type2/",
+                   height = "42px")
+```
+
+The file will automatically download when complete.\
+Please be patient when generating! - It can take up to 30 seconds per download
+
+
+
+&nbsp;
+
+### Pre-Generated Type 2 Questions
+
+Clicking the below links rewrites the current page so I recommend opening the links in a new tab
+
+[Question 1](Unit2Type2Pregens/RevisionQuestion-Unit2-Type2 (1).pdf)
+
+[Question 2](Unit2Type2Pregens/RevisionQuestion-Unit2-Type2 (2).pdf)
+
+[Question 3](Unit2Type2Pregens/RevisionQuestion-Unit2-Type2 (3).pdf)
+
+[Question 4](Unit2Type2Pregens/RevisionQuestion-Unit2-Type2 (4).pdf)
+
+[Question 5](Unit2Type2Pregens/RevisionQuestion-Unit2-Type2 (5).pdf)
+
+[Question 6](Unit2Type2Pregens/RevisionQuestion-Unit2-Type2 (6).pdf)
