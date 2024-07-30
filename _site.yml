@@ -1,7 +1,13 @@
 name: "AATQuestionGenerator"
 output_dir: "docs"
 navbar:
-  title: "AAT Question Generator"
-  left:
-    - text: "Bookkeeping Practice (Type 1)"
+  title: "Ruth's AAT Question Generator"
+  right:
+    - text: "Unit 1"
       href: index.html
+    - text: "Unit 2"
+      href: Type2.html
+output:
+  html_document:
+    theme: flatly
+    

@@ -1,44 +1,32 @@
 ---
-title: "Bookkeeping Practice! (Type 1)"
-output:
-  prettydoc::html_pretty:
-    theme: cayman
-    toc: yes
+title: "Bookkeeping Practice - Unit 1"
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# The PDF Format
-
-Page 1 : Questions
-
-Pages 2 - 5 : Empty Tables
-
-Pages 6 - 9 : Solutions
-
 &nbsp;
 
-# Generate a Question
+### Generate a Question
 
-<iframe src ="https://mystruth.shinyapps.io/project/" height=43px width=225px />
+<iframe src ="https://mystruth.shinyapps.io/Unit1/" height=43px width=225px />
 
-```{r Generation, echo = FALSE}
-knitr::include_app("https://mystruth.shinyapps.io/project/",
+```{r Unit1, echo = FALSE}
+knitr::include_app("https://mystruth.shinyapps.io/Unit1/",
                    height = "42px")
 ```
 
 The file will automatically download when complete.\
-Please be patient when generating! - It can take up to 30 seconds per download!
+Please be patient when generating! - It can take up to 30 seconds per download
 
 
 
 &nbsp;
 
-# Pre-Generated Questions
+### Pre-Generated Questions
 
-Clicking the below links rewrites the current page so I recommend opening the links in a new tab!
+Clicking the below links rewrites the current page so I recommend opening the links in a new tab
 
 [Question 1](RevisionQuestion (1).pdf)
 
@@ -59,10 +47,6 @@ Clicking the below links rewrites the current page so I recommend opening the li
 [Question 9](RevisionQuestion (9).pdf)
 
 [Question 10](RevisionQuestion (10).pdf)
-
-[Question 11](RevisionQuestion (11).pdf)
-
-[Question 12](RevisionQuestion.pdf)
 
 &nbsp;
 
