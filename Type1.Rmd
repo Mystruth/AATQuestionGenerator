@@ -1,0 +1,52 @@
+---
+title: "Bookkeeping Practice - Unit 1"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+&nbsp;
+
+### Generate a Question
+
+<iframe src ="https://mystruth.shinyapps.io/Unit1/" height=43px width=225px />
+
+```{r Unit1, echo = FALSE}
+knitr::include_app("https://mystruth.shinyapps.io/Unit1/",
+                   height = "42px")
+```
+
+The file will automatically download when complete.\
+Please be patient when generating! - It can take up to 30 seconds per download
+
+
+&nbsp;
+
+### Pre-Generated Questions
+
+Clicking the below links rewrites the current page so I recommend opening the links in a new tab
+
+[Pre-Generated Question 1](Unit1Pregens/RevisionQuestion (1).pdf)
+
+[Pre-Generated Question 2](Unit1Pregens/RevisionQuestion (2).pdf)
+
+[Pre-Generated Question 3](Unit1Pregens/RevisionQuestion (3).pdf)
+
+[Pre-Generated Question 4](Unit1Pregens/RevisionQuestion (4).pdf)
+
+[Pre-Generated Question 5](Unit1Pregens/RevisionQuestion (5).pdf)
+
+[Pre-Generated Question 6](Unit1Pregens/RevisionQuestion (6).pdf)
+
+[Pre-Generated Question 7](Unit1Pregens/RevisionQuestion (7).pdf)
+
+[Pre-Generated Question 8](Unit1Pregens/RevisionQuestion (8).pdf)
+
+[Pre-Generated Question 9](Unit1Pregens/RevisionQuestion (9).pdf)
+
+[Pre-Generated Question 10](Unit1Pregens/RevisionQuestion (10).pdf)
+
+&nbsp;
+
+

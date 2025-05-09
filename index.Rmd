@@ -1,52 +1,49 @@
 ---
-title: "Bookkeeping Practice - Unit 1"
+title: "VAT Question Generator - Type 1"
 ---
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
 
 &nbsp;
 
-### Generate a Question
+### Generate a VAT Question
 
-<iframe src ="https://mystruth.shinyapps.io/Unit1/" height=43px width=225px />
+<iframe src ="https://mystruth.shinyapps.io/VAT-Type1/" height=43px width=225px />
 
-```{r Unit1, echo = FALSE}
-knitr::include_app("https://mystruth.shinyapps.io/Unit1/",
+```{r Unit2-Type1, echo = FALSE}
+knitr::include_app("https://mystruth.shinyapps.io/VAT-Type1/",
                    height = "42px")
 ```
 
 The file will automatically download when complete.\
-Please be patient when generating! - It can take up to 30 seconds per download
+Please be patient when generating! - It can take up to 60 seconds per download
+
 
 
 &nbsp;
 
-### Pre-Generated Questions
+### Pre-Generated VAT Questions
 
 Clicking the below links rewrites the current page so I recommend opening the links in a new tab
 
-[Question 1](Unit1Pregens/RevisionQuestion (1).pdf)
+[Pre-Generated Question 1](Unit2VATPregens/VATRevisionQuestion-Type1-Pregen1.pdf)
 
-[Question 2](Unit1Pregens/RevisionQuestion (2).pdf)
+[Pre-Generated Question 2](Unit2VATPregens/VATRevisionQuestion-Type1-Pregen2.pdf)
 
-[Question 3](Unit1Pregens/RevisionQuestion (3).pdf)
+[Pre-Generated Question 3](Unit2VATPregens/VATRevisionQuestion-Type1-Pregen3.pdf)
 
-[Question 4](Unit1Pregens/RevisionQuestion (4).pdf)
+[Pre-Generated Question 4](Unit2VATPregens/VATRevisionQuestion-Type1-Pregen4.pdf)
 
-[Question 5](Unit1Pregens/RevisionQuestion (5).pdf)
+[Pre-Generated Question 5](Unit2VATPregens/VATRevisionQuestion-Type1-Pregen5.pdf)
 
-[Question 6](Unit1Pregens/RevisionQuestion (6).pdf)
+[Pre-Generated Question 6](Unit2VATPregens/VATRevisionQuestion-Type1-Pregen6.pdf)
 
-[Question 7](Unit1Pregens/RevisionQuestion (7).pdf)
+[Pre-Generated Question 7](Unit2VATPregens/VATRevisionQuestion-Type1-Pregen7.pdf)
 
-[Question 8](Unit1Pregens/RevisionQuestion (8).pdf)
+[Pre-Generated Question 8](Unit2VATPregens/VATRevisionQuestion-Type1-Pregen8.pdf)
 
-[Question 9](Unit1Pregens/RevisionQuestion (9).pdf)
+[Pre-Generated Question 9](Unit2VATPregens/VATRevisionQuestion-Type1-Pregen9.pdf)
 
-[Question 10](Unit1Pregens/RevisionQuestion (10).pdf)
+[Pre-Generated Question 10](Unit2VATPregens/VATRevisionQuestion-Type1-Pregen10.pdf)
+
 
 &nbsp;
-
 

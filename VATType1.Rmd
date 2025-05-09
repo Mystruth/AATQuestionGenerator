@@ -1,0 +1,41 @@
+---
+title: "VAT Question Generator - Type 1"
+---
+
+&nbsp;
+
+### Generate a VAT Question
+
+<iframe src ="https://mystruth.shinyapps.io/VAT-Type1/" height=43px width=225px />
+
+```{r Unit2-Type1, echo = FALSE}
+knitr::include_app("https://mystruth.shinyapps.io/VAT-Type1/",
+                   height = "42px")
+```
+
+The file will automatically download when complete.\
+Please be patient when generating! - It can take up to 60 seconds per download
+
+
+
+&nbsp;
+
+### Pre-Generated VAT Questions
+
+Clicking the below links rewrites the current page so I recommend opening the links in a new tab
+
+[Question 1](Unit2VATPregens/VATRevisionQuestion-Type1-Pregen1.pdf)
+
+[Question 2](Unit2VATPregens/VATRevisionQuestion-Type1-Pregen2.pdf)
+
+[Question 3](Unit2VATPregens/VATRevisionQuestion-Type1-Pregen3.pdf)
+
+[Question 4](Unit2VATPregens/VATRevisionQuestion-Type1-Pregen4.pdf)
+
+[Question 5](Unit2VATPregens/VATRevisionQuestion-Type1-Pregen5.pdf)
+
+[Question 6](Unit2VATPregens/VATRevisionQuestion-Type1-Pregen6.pdf)
+
+
+&nbsp;
+

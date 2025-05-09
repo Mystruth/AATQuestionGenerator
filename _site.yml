@@ -3,9 +3,11 @@ output_dir: "docs"
 navbar:
   title: "Ruth's AAT Question Generator"
   right:
-    - text: "Unit 1"
+    - text: "VAT Question Type 1"
       href: index.html
-    - text: "Unit 2"
+    - text: "Bookkeeping Unit 1"
+      href: Type1.html
+    - text: "Bookkeeping Unit 2"
       href: Type2.html
 output:
   html_document:
