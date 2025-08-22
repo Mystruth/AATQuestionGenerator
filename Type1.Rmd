@@ -18,7 +18,7 @@ knitr::include_app("https://mystruth.shinyapps.io/Unit1/",
 ```
 
 The file will automatically download when complete.\
-Please be patient when generating! - It can take up to 30 seconds per download
+Please be patient when generating! - It can take up to 60 seconds per download
 
 
 &nbsp;
